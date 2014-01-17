@@ -148,7 +148,8 @@ knit = function(input, output = NULL, tangle = FALSE, text = NULL, quiet = FALSE
     ext = tolower(file_ext(input))
     if ((is.null(output) || is.na(output)) && !child_mode())
       output = basename(auto_out_name(input, ext))
-    options(tikzMetricsDictionary = tikz_dict(input)) # cache tikz dictionary
+    if (is.null(getOption('tikzMetricsDictionary'))) # only set if not already set
+      options(tikzMetricsDictionary = tikz_dict(input)) # cache tikz dictionary
     knit_concord$set(infile = input, outfile = output)
   }
 
